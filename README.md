@@ -1,0 +1,2 @@
+# kubectl-plugin
+kubectl plugin
