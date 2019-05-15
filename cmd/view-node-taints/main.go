@@ -14,9 +14,7 @@
 
 package main
 
-import (
-	"github.com/gosoon/kubectl-plugin/cmd/view-node-taints/app"
-)
+import "github.com/gosoon/kubectl-plugin/cmd/view-node-taints/app"
 
 func main() {
 	app.Execute()
