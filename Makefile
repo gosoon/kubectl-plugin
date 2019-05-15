@@ -15,8 +15,3 @@ view-node-resource:
 
 view-node-taints:
 	$(GO) build -o kubectl-view-node-taints cmd/view-node-taints/main.go
-
-check:
-	find . -iname '*.go' -type f | grep -v /vendor/ | xargs gofmt -l
-	GO111MODULE=on go test -v -race ./...
-	$(GO) vet ./...

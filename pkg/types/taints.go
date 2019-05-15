@@ -1,5 +1,6 @@
 package types
 
+// TaintsColumnDefinitions xxx
 type TaintsColumnDefinitions struct {
 	Name    string
 	Status  string
