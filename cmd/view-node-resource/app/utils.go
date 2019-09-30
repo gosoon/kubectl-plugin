@@ -7,7 +7,7 @@ import (
 	"github.com/gosoon/kubectl-plugin/pkg/types"
 	"github.com/gosoon/kubectl-plugin/pkg/utils"
 
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 )
 
 func getNodeAllocatable(allocatable v1.ResourceList) (float64, float64) {
@@ -26,7 +26,7 @@ func getNodeAllocatable(allocatable v1.ResourceList) (float64, float64) {
 }
 
 func pickNodeCPURequests(node *types.NodeResourceList) string {
-	return fmt.Sprintf("%v (%v)", node.CPURequests, node.CPURequestsUsage)
+	return fmt.Sprintf("%.2f (%v)", node.CPURequests, node.CPURequestsUsage)
 }
 
 func pickNodeMemoryRequests(node *types.NodeResourceList) string {
@@ -34,7 +34,7 @@ func pickNodeMemoryRequests(node *types.NodeResourceList) string {
 }
 
 func pickNodeCPULimits(node *types.NodeResourceList) string {
-	return fmt.Sprintf("%v (%v)", node.CPULimits, node.CPULimitsUsage)
+	return fmt.Sprintf("%.2f (%v)", node.CPULimits, node.CPULimitsUsage)
 }
 
 func pickNodeMemoryLimits(node *types.NodeResourceList) string {

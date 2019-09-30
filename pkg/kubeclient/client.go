@@ -1,31 +1,26 @@
 package kubeclient
 
 import (
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
-const APIServer = "127.0.0.1:8080"
+const kubeconfig = "/root/.kube/config"
 
 type Client struct {
-	APIServer string
 	Clientset *kubernetes.Clientset
 }
 
 func NewClient() (*Client, error) {
-	restConfig := &rest.Config{
-		Host: APIServer,
-	}
-
-	clientset, err := kubernetes.NewForConfig(restConfig)
+	cfg, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+	clientset, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
 		panic(err.Error())
 	}
 
 	client := &Client{
-		APIServer: APIServer,
 		Clientset: clientset,
 	}
 	return client, nil
@@ -40,7 +35,7 @@ func (client *Client) ListNode() (*v1.NodeList, error) {
 }
 
 func (client *Client) ListPod() (*v1.PodList, error) {
-	podList, err := client.Clientset.CoreV1().Pods("default").List(metav1.ListOptions{})
+	podList, err := client.Clientset.CoreV1().Pods("").List(metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}
