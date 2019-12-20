@@ -2,8 +2,6 @@ package app
 
 import (
 	"fmt"
-	"strconv"
-
 	"github.com/gosoon/kubectl-plugin/pkg/types"
 	"github.com/gosoon/kubectl-plugin/pkg/utils"
 
@@ -15,7 +13,10 @@ func getNodeAllocatable(allocatable v1.ResourceList) (float64, float64) {
 	nodeMemory := float64(0)
 	for name, value := range allocatable {
 		if string(name) == "cpu" {
-			cpu, _ := strconv.ParseFloat(value.String(), 64)
+			//cpu, _ := strconv.ParseFloat(value.String(), 64)
+			// MilliValue returns the value of ceil(q * 1000); this could overflow an int64;
+			// if that's a concern, call Value() first to verify the number is small enough.
+			cpu := float64(value.MilliValue()/1000)
 			nodeCPU = cpu
 		} else if string(name) == "memory" {
 			memory, _ := utils.ConvertMemoryUnit(value.String())
